@@ -27,7 +27,7 @@ class Player(db.Model):
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
     primary_position = db.Column(db.String(2), nullable=False)
-    average = db.Column(db.Float, nullable=False)
+    average = db.Column(db.Float, nullable=False, format="{:.3f}")
     rbi = db.Column(db.Integer, nullable=False)
     homers = db.Column(db.Integer, nullable=False)
 
@@ -36,7 +36,7 @@ class Player(db.Model):
         self.team_id = team_id
         self.name = name
         self.primary_position = primary_position
-        self.average = "{:.3f}".format(average)
+        self.average = average
         # try adding this code in to format players table: "{:.3f}".format(average)
         self.rbi = rbi
         self.homers = homers
