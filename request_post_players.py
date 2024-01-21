@@ -49,7 +49,7 @@ def get_player_stats(player_id, team_id):
                     'rbi': player_stats['stats'][0]['splits'][0]['stat']['rbi'], 
                     'homers': player_stats['stats'][0]['splits'][0]['stat']['homeRuns']})
     except:
-        player_dict.update({'average': 0.000,
+        player_dict.update({'average': "{:.3f}".format(0.000),
                     'rbi': 0, 
                     'homers': 0})
     
