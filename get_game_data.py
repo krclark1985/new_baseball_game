@@ -88,7 +88,6 @@ def print_players(player_dicts, team_name):
         player = p['name']
         position = p['primary_position']
         avg = p['average']
-        avg = "{:.3f}".format(avg)
         homers = p['homers']
         rbi = p['rbi']
         print(f"{i} - {player}")

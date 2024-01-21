@@ -15,12 +15,14 @@ class AtBat:
         try:
             print('')
             print('Now batting: ', self.lineup[self.lineup_index]['name'])
+            print('             ', self.lineup[self.lineup_index]['average'] + ',', self.lineup[self.lineup_index]['homers'], 'HR,', self.lineup[self.lineup_index]['rbi'], 'RBI')
             print('')
             self.lineup_index += 1
         except:
             self.lineup_index = 0
             print('')
             print('Now batting: ', self.lineup[self.lineup_index]['name'])
+            print('             ', self.lineup[self.lineup_index]['average'] + ',', self.lineup[self.lineup_index]['homers'], 'HR,', self.lineup[self.lineup_index]['rbi'], 'RBI')
             print('')
             self.lineup_index += 1
 
@@ -46,6 +48,7 @@ class AtBat:
 
     # Find a way to track the current batter in here to list their name!
     def at_bat_func(self):
+        print('')
         pitch = random.randint(1, 8)
         while True:
             choice = input("Input 1 to swing or 2 to take the pitch: ")
