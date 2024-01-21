@@ -36,7 +36,7 @@ class Player(db.Model):
         self.team_id = team_id
         self.name = name
         self.primary_position = primary_position
-        self.average = average
+        self.average = "{:.3f}".format(average)
         # try adding this code in to format players table: "{:.3f}".format(average)
         self.rbi = rbi
         self.homers = homers
