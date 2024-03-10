@@ -1,0 +1,9 @@
+
+  NYC                             SD                                       Sql Alchemy (MI)
+Stan     |    internet     |     Kyles app              |  internet      |     Kyle's DB 
+         |                 |     {  python app    }     |                |
+         |                 |          game.py                            |    
+          -------------->        (API) pitch                             |
+                           |             update_strikes   |              |
+                                                db.update | ------------>
+                                                                         |
