@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 # https://flask.palletsprojects.com/en/2.0.x/patterns/appfactories/
 
@@ -13,8 +14,9 @@ def get_env_variable(name):
 
 
 def create_app(test_config=None):
-    env = get_env_variable("DATABASE_URI")
+    env = get_env_variable("DATABASE_URI3")
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
         SQLALCHEMY_DATABASE_URI= env,
@@ -39,8 +41,11 @@ def create_app(test_config=None):
     db.init_app(app)
     migrate = Migrate(app, db)
 
-    from .api import players, teams
+    from .api import players, teams, game, team1lineup, team2lineup
     app.register_blueprint(players.bp)
     app.register_blueprint(teams.bp)
+    app.register_blueprint(game.bp)
+    app.register_blueprint(team1lineup.bp)
+    app.register_blueprint(team2lineup.bp)
 
     return app
