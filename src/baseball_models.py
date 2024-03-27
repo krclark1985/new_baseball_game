@@ -78,14 +78,14 @@ class Game(db.Model):
     runner4 = db.Column(db.Integer, nullable=False, default=0)
     current_runner = db.Column(db.Integer, nullable=False, default=1)
 
-    def __init__(self, team1_name, team1_id, team2_name, team2_id):
-        self.team1_name = team1_name
-        self.team1_id = team1_id
+    def __init__(self):
+        # self.team1_name = team1_name
+        # self.team1_id = team1_id
         # self.team1_lineup = team1_lineup
         # self.team1_batter = team1_batter
         # self.team1_runs = team1_runs
-        self.team2_name = team2_name
-        self.team2_id = team2_id
+        # self.team2_name = team2_name
+        # self.team2_id = team2_id
         # self.team2_lineup = team2_lineup
         # self.team2_batter = team2_batter
         # self.team2_runs = team2_runs
@@ -100,8 +100,8 @@ class Game(db.Model):
         # self.runner4 = runner4
         # self.current_runner = current_runner
     
-    def __str__(self):
-        return f"<gid={self.id}, away_name={self.team1_name}, home_name={self.team2_name}>"
+        def __str__(self):
+            return f"<gid={self.id}, away_name={self.team1_name}, home_name={self.team2_name}>"
 
         
     def serialize(self):
@@ -130,6 +130,26 @@ class Game(db.Model):
             'runner4': self.runner4,
             'current_runner': self.current_runner,
             '''
+
+
+class Lineup(db.Model):
+    __tablename__ = 'lineups'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    away_lineup = db.Column(JSONType)
+    home_lineup = db.Column(JSONType)
+
+    def __init__(self, away_lineup, home_lineup):
+        self.away_lineup = away_lineup
+        self.home_lineup = home_lineup
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'away_lineup': self.away_lineup,
+            'home_lineup': self.home_lineup
+        }
+
+'''
 
 class Team1Lineup(db.Model):
     __tablename__ = 'team1lineup'
@@ -185,3 +205,4 @@ class Team2Lineup(db.Model):
             'rbi': self.rbi,
             'homers': self.homers,
         }
+'''

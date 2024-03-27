@@ -12,10 +12,10 @@ bp = Blueprint('game', __name__, url_prefix='/game')
 def create_game():
     req = request.json
     g = Game(
-        team1_name = req["team1_name"],
-        team1_id = req["team1_id"],
-        team2_name = req["team2_name"],
-        team2_id = req["team2_id"],
+        # team1_name = req["team1_name"],
+        # team1_id = req["team1_id"],
+        # team2_name = req["team2_name"],
+        # team2_id = req["team2_id"],
     )
     db.session.add(g) # prepare CREATE statement
     db.session.commit() # execute CREATE statement
@@ -202,7 +202,6 @@ def show_runner4(gid: int):
 # Update endpoint for each pitch
 @bp.route('/<int:gid>/pitch/<int:player_input>', methods=['PATCH', 'PUT'])
 def update_pitch(gid: int, player_input: int):
-    print("I AM HIT")
     g = Game.query.get_or_404(gid, "Game not found")
     pitch_outcome = random.randint(1, 8)
     outcome_string = ''

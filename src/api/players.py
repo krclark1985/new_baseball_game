@@ -5,8 +5,6 @@ from ..baseball_models import Player, db
 bp = Blueprint('players', __name__, url_prefix='/players')
 
 # Read endpoint for index of all players in players table;
-# How to make this so it calls an index of all players on
-# a given team?
 @bp.route('', methods=['GET']) # decorator takes path and list of HTTP verbs
 def index():
     players = Player.query.all() # ORM performs SELECT query
@@ -15,11 +13,36 @@ def index():
         result.append(p.serialize()) # build list of Players as dictionaries
     return jsonify(result) # return JSON response
 
+# Read endpoint for index of all players on a given team
+@bp.route('/<int:team_id>', methods=['GET']) # decorator takes path and list of HTTP verbs
+def index_team_roster(team_id: int):
+    players = Player.query.all() # ORM performs SELECT query
+    result = []
+    for p in players:
+        if p.team_id == team_id:
+            result.append(p.serialize()) # build list of Players as dictionaries
+    return jsonify(result) # return JSON response
+
+# TODO come back and rework to be random instead of first 9
+# Read endpoint for index of 9 first players from a given team
+@bp.route('/<int:team_id>/random', methods=['GET']) # decorator takes path and list of HTTP verbs
+def index_random_nine(team_id: int):
+    players = Player.query.all() # ORM performs SELECT query
+    result = []
+    i = 0
+    for p in players:
+        if p.team_id == team_id and i < 9:
+            i += 1
+            result.append(p.serialize()) # build list of Players as dictionaries
+    return jsonify(result) # return JSON response
+
+'''
 # Read endpoint for specific player in players table
 @bp.route('/<int:id>', methods=['GET'])
 def show(id: int):
     p = Player.query.get_or_404(id, "Player not found")
     return jsonify(p.serialize())
+'''
 
 # Create endpoint for creating new player to players table
 @bp.route('', methods=['POST'])
