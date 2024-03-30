@@ -108,56 +108,38 @@ def update_walk(current_game):
     
     # This WALK situation needs to be fixed for runners on 2nd, 2nd/3rd, or 3rd (current_runner goes to 1st only)
     '''
-    first = False
-    second = False
-    third = False
-    idx = g.current_runner
-    prev_runner = 0
-    if idx == 1:
-        prev_runner = 4
-    else:
-        prev_runner = idx - 1
-        
-    if g.runner1 > 0:
-        if g.runner1 == 1:
-            first = True
-        elif g.runner1 == 2:
-            second = True
-        else:
-            third = True
-
-    if g.runner2 > 0:
-        if g.runner2 == 1:
-            first = True
-        elif g.runner2 == 2:
-            second = True
-        else:
-            third = True
-
-    if g.runner3 > 0:
-        if g.runner3 == 1:
-            first = True
-        elif g.runner3 == 2:
-            second = True
-        else:
-            third = True
-
-    if g.runner4 > 0:
-        if g.runner4 == 1:
-            first = True
-        elif g.runner4 == 2:
-            second = True
-        else:
-            third = True   
+    runner1 = (get int from db)
+    runner2 = (get int from db)
+    runner3 = (get int from db)
+    runner4 = (get int from db)
+    runner_list = []
+    runner_list[0] = runner1
+    runner_list[1] = runner2
+    runner_list[2] = runner3
+    runner_list[3] = runner4
+    current_runner = (get int from db)
     
-    if first == True and second == False and third == False:
-        update_runners(1)
-    elif first == True and second == True and third == False:
-        update_runners(1)
-    elif first == True and second == True and third == True:
-        update_runners(1)
-    elif first == True and second == False and third == True:
-        update_runner{prev_runner}(1)
+    force_still_on = 0
+
+    then loop through runners to see if there's a runner on first;
+    if yes: force_still_on = 1
+        loop through runners to see if there's a runner on second;
+        if yes: force_still_on = 2
+            loop through runners to see if there's a runner on third;
+            if yes: force_still_on = 3, then break
+            else: break
+        else: break
+    else: break
+
+    to find current runner between 4 runners: loop through and look for first that == 0! (that's the one!
+    once you have it, manipulate it from there, so do this last after the below logic)
+    
+    if force_still_on = 0: make runner{current_runner} = 1, then increment current_runner (call its function?)
+    elif force_still_on = 1: make runner{current_runner} = 1, then increment current_runner, plus runner on 1st moves to 2nd
+    elif force_still_on = 2: make runner{current_runner} = 1, then increment current_runner, plus runner on 1st moves to 2nd and runner on 2nd to 3rd
+    elif force_still_on = 3: make runner{current_runner} = 1, then increment current_runner, plus 1st > 2nd, 2nd > 3rd, 3rd > home (reset to zero), increment runs
+    
+    
     '''    
     
     try:
