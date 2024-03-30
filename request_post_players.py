@@ -38,7 +38,7 @@ def get_player_stats(player_id, team_id):
         'primary_position': player_info['people'][0]['primaryPosition']['abbreviation']
     }
 
-    url2 = f'https://statsapi.mlb.com/api/v1/people/{player_id}/stats?season=2023&group=hitting&stats=season'
+    url2 = f'https://statsapi.mlb.com/api/v1/people/{player_id}/stats?season=2024&group=hitting&stats=season'
     player_stats = requests.get(url2)
     player_stats = player_stats.json()
 

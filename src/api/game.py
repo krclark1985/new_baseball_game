@@ -211,7 +211,7 @@ def update_pitch(gid: int, player_input: int):
         outcome_string = "Called strike."
     elif pitch_outcome <= 5 and player_input == 1:
         game_internal.update_hit_func(g)
-        outcome_string = "Batter makes contact!"
+        outcome_string = g.hit_outcome
     elif pitch_outcome >= 6 and player_input == 1:
         game_internal.update_swing_miss(g)
         outcome_string = "Swing and a miss!"
@@ -225,4 +225,10 @@ def update_pitch(gid: int, player_input: int):
     except:
         return jsonify(False)
 
-
+# Read endpoint for hit_outcome
+@bp.route('/<int:gid>/hit_outcome', methods=['GET']) 
+def show_hit(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    hit_outcome = g.hit_outcome
+    hit_outcome = str(hit_outcome)
+    return hit_outcome

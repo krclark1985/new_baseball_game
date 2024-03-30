@@ -344,6 +344,8 @@ def update_runners(current_game, bases: int):
 def update_single(current_game):
     current_game.balls = 0
     current_game.strikes = 0
+    current_game.hit_outcome = 'Single'
+
     update_runners(current_game, 1)
     if current_game.top_of_inning == True:
         update_team1_batter(current_game)
@@ -361,6 +363,8 @@ def update_single(current_game):
 def update_double(current_game):
     current_game.balls = 0
     current_game.strikes = 0
+    current_game.hit_outcome = 'Double'
+
     update_runners(current_game, 2)
     if current_game.top_of_inning == True:
         update_team1_batter(current_game)
@@ -378,6 +382,8 @@ def update_double(current_game):
 def update_triple(current_game):
     current_game.balls = 0
     current_game.strikes = 0
+    current_game.hit_outcome = 'Triple'
+
     update_runners(current_game, 3)
     if current_game.top_of_inning == True:
         update_team1_batter(current_game)
@@ -395,6 +401,7 @@ def update_triple(current_game):
 def update_home_run(current_game):
     current_game.balls = 0
     current_game.strikes = 0
+    current_game.hit_outcome = 'Home run!!!'
     update_runners(current_game, 4)
     if current_game.top_of_inning == True:
         update_team1_batter(current_game)
@@ -410,6 +417,7 @@ def update_home_run(current_game):
 # Update endpoint for a foul ball
 # @bp.route('/<int:gid>/foul_ball', methods=['PATCH', 'PUT'])
 def update_foul_ball(current_game):
+    current_game.hit_outcome = 'Foul ball'
     if current_game.strikes < 2:
         update_strikes(current_game)
 
@@ -422,6 +430,7 @@ def update_foul_ball(current_game):
 # Update endpoint for a swing and miss
 # @bp.route('/<int:gid>/swing_miss', methods=['PATCH', 'PUT'])
 def update_swing_miss(current_game):
+    current_game.hit_outcome = 'Swing and a miss!'
     update_strikes(current_game)
 
     try:
@@ -435,7 +444,8 @@ def update_swing_miss(current_game):
 def update_groundout(current_game):
     current_game.balls = 0
     current_game.strikes = 0
-    
+    current_game.hit_outcome = 'Groundout'
+
     idx = current_game.current_runner
     if idx != 1 and current_game.runner1 > 0:
         update_runner1(current_game, 1)
@@ -464,7 +474,8 @@ def update_groundout(current_game):
 def update_flyout(current_game):
     current_game.balls = 0
     current_game.strikes = 0
-    
+    current_game.hit_outcome = 'Flyout'
+
     if current_game.top_of_inning == True:
         update_team1_batter(current_game)
     else:
@@ -519,6 +530,6 @@ def update_hit_func(current_game):
     
     try:
         db.session.commit()
-        return jsonify(outcome_string)
+        return jsonify(outcome_string.serialize)
     except:
         return jsonify(False)
