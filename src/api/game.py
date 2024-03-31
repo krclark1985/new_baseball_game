@@ -2,7 +2,7 @@ import json
 import random
 from . import game_internal
 from flask import Blueprint, jsonify, request
-from ..baseball_models import Game, db
+from ..baseball_models import Game, Lineup, db
 
 bp = Blueprint('game', __name__, url_prefix='/game')
 
@@ -170,13 +170,15 @@ def show_team2_batter(gid: int):
 @bp.route('/<int:gid>/current_batter', methods=['GET']) 
 def show_current_batter(gid: int):
     g = Game.query.get_or_404(gid, "Game not found")
+    L = Lineup.query.get_or_404(gid, "Lineup not found")
     if g.top_of_inning == True:
-        current_batter = g.team1_batter
+        batter_index = g.team1_batter
+        current_batter = L.away_lineup[batter_index]
     else:
-        current_batter = g.team2_batter
+        batter_index = g.team2_batter
+        current_batter = L.home_lineup[batter_index]
     
-    current_batter = str(current_batter)
-    return current_batter
+    return jsonify(current_batter)
 
 # Read endpoint for balls
 @bp.route('/<int:gid>/balls', methods=['GET']) 
