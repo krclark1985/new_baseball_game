@@ -173,10 +173,10 @@ def show_current_batter(gid: int):
     L = Lineup.query.get_or_404(gid, "Lineup not found")
     if g.top_of_inning == True:
         batter_index = g.team1_batter
-        current_batter = L.away_lineup[batter_index]
+        current_batter = L.away_lineup[batter_index - 1]
     else:
         batter_index = g.team2_batter
-        current_batter = L.home_lineup[batter_index]
+        current_batter = L.home_lineup[batter_index - 1]
     
     return jsonify(current_batter)
 
