@@ -1,3 +1,4 @@
+import json
 import random
 from . import game_internal
 from flask import Blueprint, jsonify, request
@@ -8,14 +9,14 @@ bp = Blueprint('game', __name__, url_prefix='/game')
 
 # Create endpoint for creating new game (id = 1)
 # Need to fix this so it returns the db row id rather than hardcoding a 1
-@bp.route('', methods=['POST'])
+@bp.route('/create', methods=['POST'])
 def create_game():
     req = request.json
     g = Game(
-        # team1_name = req["team1_name"],
-        # team1_id = req["team1_id"],
-        # team2_name = req["team2_name"],
-        # team2_id = req["team2_id"],
+        team1_name = req["team1_name"],
+        team1_id = req["team1_id"],
+        team2_name = req["team2_name"],
+        team2_id = req["team2_id"],
     )
     db.session.add(g) # prepare CREATE statement
     db.session.commit() # execute CREATE statement
