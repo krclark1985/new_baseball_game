@@ -166,7 +166,7 @@ def show_team2_batter(gid: int):
     batter = str(batter)
     return batter
 
-# Read endpoint for current batter
+# Read endpoint for current batter's info/stats from lineup table
 @bp.route('/<int:gid>/current_batter', methods=['GET']) 
 def show_current_batter(gid: int):
     g = Game.query.get_or_404(gid, "Game not found")
