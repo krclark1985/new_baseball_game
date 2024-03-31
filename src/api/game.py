@@ -22,6 +22,18 @@ def create_game():
     db.session.commit() # execute CREATE statement
     return str(g.id)
 
+
+# Read endpoint for team1_name
+@bp.route('/<int:gid>/teams_info', methods=['GET']) # decorator takes path and list of HTTP verbs
+def show_team_info(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
+    return jsonify(
+        team1_name = g.team1_name,
+        team1_id = g.team1_id,
+        team2_name = g.team2_name,
+        team2_id = g.team2_id
+    )
+
 # Read endpoint for team1_name
 @bp.route('/<int:gid>/team1_name', methods=['GET']) # decorator takes path and list of HTTP verbs
 def show_team1_name(gid: int):
@@ -83,7 +95,7 @@ def show_team1_runs(gid: int):
     runs = g.team1_runs
     runs = str(runs)
     return runs
- 
+
 # Read endpoint for team2_runs
 @bp.route('/<int:gid>/team2_runs', methods=['GET']) 
 def show_team2_runs(gid: int):
@@ -91,6 +103,16 @@ def show_team2_runs(gid: int):
     runs = g.team2_runs
     runs = str(runs)
     return runs
+
+# Read endpoint for team2_runs
+@bp.route('/<int:gid>/runs', methods=['GET']) 
+def show_runs(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    return jsonify(
+        team1_runs = g.team1_runs, 
+        team2_runs = g.team2_runs
+    )
+
 
 # Read endpoint for inning
 @bp.route('/<int:gid>/inning', methods=['GET']) 
@@ -200,8 +222,46 @@ def show_runner4(gid: int):
     runner4 = str(runner4)
     return runner4
 
-# Update endpoint for each pitch
-@bp.route('/<int:gid>/pitch/<int:player_input>', methods=['PATCH', 'PUT'])
+# Read endpoint for runners on
+@bp.route('/<int:gid>/runners', methods=['GET']) 
+def show_runners(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+
+    return jsonify(
+        runner1 = g.runner1, 
+        runner2 = g.runner2, 
+        runner3 = g.runner3, 
+        runner4 = g.runner4, 
+    )
+
+# # Update endpoint for each pitch
+# @bp.route('/<int:gid>/pitch/<int:player_input>', methods=['PATCH', 'PUT'])
+# def update_pitch(gid: int, player_input: int):
+#     g = Game.query.get_or_404(gid, "Game not found")
+#     pitch_outcome = random.randint(1, 8)
+#     outcome_string = ''
+
+#     if pitch_outcome <= 5 and player_input == 2:
+#         game_internal.update_strikes(g)
+#         outcome_string = "Called strike."
+#     elif pitch_outcome <= 5 and player_input == 1:
+#         game_internal.update_hit_func(g)
+#         outcome_string = g.hit_outcome
+#     elif pitch_outcome >= 6 and player_input == 1:
+#         game_internal.update_swing_miss(g)
+#         outcome_string = "Swing and a miss!"
+#     else:
+#         game_internal.update_balls(g)
+#         outcome_string = "Ball"
+    
+#     try:
+#         db.session.commit()
+#         return jsonify(outcome_string)
+#     except:
+#         return jsonify(False)
+    
+# Update endpoint for each pitch COPY WITH GET METHOD
+@bp.route('/<int:gid>/pitch/<int:player_input>', methods=['GET'])
 def update_pitch(gid: int, player_input: int):
     g = Game.query.get_or_404(gid, "Game not found")
     pitch_outcome = random.randint(1, 8)
