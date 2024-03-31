@@ -166,6 +166,18 @@ def show_team2_batter(gid: int):
     batter = str(batter)
     return batter
 
+# Read endpoint for current batter
+@bp.route('/<int:gid>/current_batter', methods=['GET']) 
+def show_current_batter(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    if g.top_of_inning == True:
+        current_batter = g.team1_batter
+    else:
+        current_batter = g.team2_batter
+    
+    current_batter = str(current_batter)
+    return current_batter
+
 # Read endpoint for balls
 @bp.route('/<int:gid>/balls', methods=['GET']) 
 def show_balls(gid: int):
