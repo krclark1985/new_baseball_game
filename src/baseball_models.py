@@ -77,6 +77,7 @@ class Game(db.Model):
     runner3 = db.Column(db.Integer, nullable=False, default=0)
     runner4 = db.Column(db.Integer, nullable=False, default=0)
     current_runner = db.Column(db.Integer, nullable=False, default=1)
+    hit_outcome = db.Column(db.String(50), unique=False, nullable=True)
 
     def __init__(self, team1_name, team1_id, team2_name, team2_id):
         self.team1_name = team1_name

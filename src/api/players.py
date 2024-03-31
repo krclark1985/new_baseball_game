@@ -1,4 +1,5 @@
 import json
+import random
 from flask import Blueprint, jsonify, abort, request
 from ..baseball_models import Player, db
 
@@ -23,18 +24,24 @@ def index_team_roster(team_id: int):
             result.append(p.serialize()) # build list of Players as dictionaries
     return jsonify(result) # return JSON response
 
-# TODO come back and rework to be random instead of first 9
-# Read endpoint for index of 9 first players from a given team
+# Read endpoint for index of 9 random players from a given team
 @bp.route('/<int:team_id>/random', methods=['GET']) # decorator takes path and list of HTTP verbs
 def index_random_nine(team_id: int):
     players = Player.query.all() # ORM performs SELECT query
     result = []
-    i = 0
     for p in players:
-        if p.team_id == team_id and i < 9:
-            i += 1
+        if p.team_id == team_id:
             result.append(p.serialize()) # build list of Players as dictionaries
-    return jsonify(result) # return JSON response
+    
+    random_nine = []
+    i = 0
+    while i < 9:
+        rand_index = random.randint(0,(len(result)) - 1)
+        p = result[rand_index]
+        random_nine.append(p)
+        del result[rand_index]
+        i += 1
+    return jsonify(random_nine) # return JSON response
 
 '''
 # Read endpoint for specific player in players table
