@@ -9,7 +9,7 @@ bp = Blueprint('game', __name__, url_prefix='/game')
 
 # Create endpoint for creating new game (id = 1)
 # Need to fix this so it returns the db row id rather than hardcoding a 1
-@bp.route('/create', methods=['POST'])
+@bp.route('', methods=['POST'])
 def create_game():
     req = request.json
     g = Game(

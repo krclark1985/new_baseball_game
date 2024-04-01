@@ -55,14 +55,15 @@ def show(id: int):
 @bp.route('', methods=['POST'])
 def create():
     req = json.loads(request.json)
-    # req body must contain user_id and content
-    if 'name' not in req or 'primary_position' not in req:
+    # req body must contain following attributes
+    if 'mlb_stats_id' not in req or 'name' not in req or 'primary_position' not in req:
         return abort(400)
     if 'average' not in req or 'rbi' not in req or 'homers' not in req:
         return abort(400)
     # construct new Player
     p = Player(
         team_id=req['team_id'],
+        mlb_stats_id=req['mlb_stats_id'],
         name=req['name'],
         primary_position=req['primary_position'],
         average=req['average'],

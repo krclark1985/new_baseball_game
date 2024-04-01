@@ -35,6 +35,7 @@ def get_player_stats(player_id, team_id):
 
     player_dict = {
         'team_id': team_id, 'name': player_info['people'][0]['fullName'],
+        'mlb_stats_id': player_id,
         'primary_position': player_info['people'][0]['primaryPosition']['abbreviation']
     }
 

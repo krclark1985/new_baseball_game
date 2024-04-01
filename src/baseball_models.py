@@ -20,12 +20,14 @@ class Team(db.Model):
             'mlb_id': self.mlb_id,
         }
 
+# TODO: Add "mlb_stats_id" column to players table
 # Make foreign key link to mlb_id in teams table rather than id?
 # Also, consider making team_id non-nullable
 class Player(db.Model):
     __tablename__ = 'players'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable=True)
+    mlb_stats_id = db.Column(db.Integer, unique=True, nullable=False)
     name = db.Column(db.String(50), unique=True, nullable=False)
     primary_position = db.Column(db.String(2), nullable=False)
     average = db.Column(db.Float, nullable=False)
@@ -33,8 +35,9 @@ class Player(db.Model):
     homers = db.Column(db.Integer, nullable=False)
 
     # Include team_id in here or no, since it's nullable?
-    def __init__(self, team_id: int, name: str, primary_position: str, average: float, rbi: int, homers: int):
+    def __init__(self, team_id: int, mlb_stats_id: int, name: str, primary_position: str, average: float, rbi: int, homers: int):
         self.team_id = team_id
+        self.mlb_stats_id = mlb_stats_id
         self.name = name
         self.primary_position = primary_position
         self.average = average
@@ -46,6 +49,7 @@ class Player(db.Model):
         return {
             'id': self.id,
             'team_id': self.team_id,
+            'mlb_stats_id': self.mlb_stats_id,
             'name': self.name,
             'primary_position': self.primary_position,
             'average': "{:.3f}".format(self.average),
