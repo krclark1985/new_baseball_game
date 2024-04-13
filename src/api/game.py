@@ -56,6 +56,18 @@ def show_team1_id(gid: int):
     team1_id = str(team1_id)
     return team1_id
 
+# Update endpoint for editing team1_id
+@bp.route('/<int:gid>/team1_id', methods=['PATCH', 'PUT'])
+def update_team1_id(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    g.team1_id = request.json["team1_id"]
+    
+    try:
+        db.session.commit()
+        return jsonify(g.serialize())
+    except:
+        return jsonify(False)
+
 # Read endpoint for team2_name
 @bp.route('/<int:gid>/team2_name', methods=['GET']) # decorator takes path and list of HTTP verbs
 def show_team2_name(gid: int):
@@ -82,6 +94,18 @@ def show_team2_id(gid: int):
     team2_id = g.team2_id
     team2_id = str(team2_id)
     return team2_id
+
+# Update endpoint for editing team2_id
+@bp.route('/<int:gid>/team2_id', methods=['PATCH', 'PUT'])
+def update_team2_id(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    g.team2_id = request.json["team2_id"]
+    
+    try:
+        db.session.commit()
+        return jsonify(g.serialize())
+    except:
+        return jsonify(False)
 
 # Read endpoint for team1_runs
 @bp.route('/<int:gid>/team1_runs', methods=['GET'])
