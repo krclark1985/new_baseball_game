@@ -84,58 +84,9 @@ class Game(db.Model):
     hit_outcome = db.Column(db.String(50), unique=False, nullable=True)
 
     def __init__(self):
-        # self.team1_name = team1_name
-        # self.team1_id = team1_id
-        # self.team1_lineup = team1_lineup
-        # self.team1_batter = team1_batter
-        # self.team1_runs = team1_runs
-        # self.team2_name = team2_name
-        # self.team2_id = team2_id
-        # self.team2_lineup = team2_lineup
-        # self.team2_batter = team2_batter
-        # self.team2_runs = team2_runs
-        # self.batting = batting
-        # self.inning = inning
-        # self.top_of_inning = top_of_inning
-        # self.end_of_inning = end_of_inning
-        # self.outs = outs
-        # self.runner1 = runner1
-        # self.runner2 = runner2
-        # self.runner3 = runner3
-        # self.runner4 = runner4
-        # self.current_runner = current_runner
-    
+            
         def __str__(self):
-            return f"<gid={self.id}, away_name={self.team1_name}, home_name={self.team2_name}>"
-
-        
-    def serialize(self):
-        return {
-            'team1_name': self.team1_name,
-            'team1_id': self.team1_id,
-            # 'team1_lineup': self.team1_lineup,
-            # 'team1_batter': self.team1_batter,
-            # 'team1_runs': self.team1_runs,
-            'team2_name': self.team2_name,
-            'team2_id': self.team2_id,
-        }
-    
-    '''
-            'team2_lineup': self.team2_lineup,
-            'team2_batter': self.team2_batter,
-            'team2_runs': self.team2_runs,
-            'batting': self.batting,
-            'inning': self.inning,
-            'top_of_inning': self.top_of_inning,
-            'end_of_inning': self.end_of_inning,
-            'outs': self.outs,
-            'runner1': self.runner1,
-            'runner2': self.runner2,
-            'runner3': self.runner3,
-            'runner4': self.runner4,
-            'current_runner': self.current_runner,
-            '''
-
+            return f"<gid={self.id}>"
 
 class Lineup(db.Model):
     __tablename__ = 'lineups'

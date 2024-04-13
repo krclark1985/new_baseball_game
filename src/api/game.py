@@ -1,3 +1,5 @@
+## REMINDER: TEAM 1 is AWAY and TEAM 2 is HOME team. 
+
 import json
 import random
 from . import game_internal
@@ -6,12 +8,10 @@ from ..baseball_models import Game, Lineup, db
 
 bp = Blueprint('game', __name__, url_prefix='/game')
 
-
 # Create endpoint for creating new game (id = 1)
 # Need to fix this so it returns the db row id rather than hardcoding a 1
-@bp.route('', methods=['POST'])
+@bp.route('/create', methods=['POST'])
 def create_game():
-    req = request.json
     g = Game()
     db.session.add(g) # prepare CREATE statement
     db.session.commit() # execute CREATE statement
