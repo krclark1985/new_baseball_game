@@ -104,10 +104,7 @@ def update_balls(current_game):
 # Update endpoint for a walk
 # @bp.route('/<int:gid>/walk', methods=['PATCH', 'PUT'])
 def update_walk(current_game):
-    update_runners(current_game, 1)
-    
-    # This WALK situation needs to be fixed for runners on 2nd, 2nd/3rd, or 3rd (current_runner goes to 1st only)
-    '''
+
     runner1 = current_game.runner1
     runner2 = current_game.runner2
     runner3 = current_game.runner3
@@ -117,37 +114,31 @@ def update_walk(current_game):
     runner_list.append(runner2)
     runner_list.append(runner3)
     runner_list.append(runner4)
-    current_runner = current_game.current_runner
     
     force_still_on = 0
 
-    then loop through runners to see if there's a runner on first, second, third, etc...
+    first_base = runner_list.count(1)
+    second_base = runner_list.count(2)
+    third_base = runner_list.count(3)
 
-    for r in runner_list:
-        if r == 1: 
+    while True:
+        if first_base >= 1: 
             force_still_on = 1
-            for r in runner_list:
-                if r == 2:
+            if second_base >= 1:
                 force_still_on = 2
-                for r in runner_list:
-                    if r == 3:
+                if third_base >= 1:
                     force_still_on = 3
                     break
-                else: break
+                else: break   
             else: break
-    else: break
+        else: break
 
-
-    to find current runner between 4 runners: loop through and look for first that == 0! (that's the one!
-    once you have it, manipulate it from there, so do this last after the below logic)
-    
-    if force_still_on = 0: make runner{current_runner} = 1, then increment current_runner (call its function?)
-    elif force_still_on = 1: make runner{current_runner} = 1, then increment current_runner, plus runner on 1st moves to 2nd
-    elif force_still_on = 2: make runner{current_runner} = 1, then increment current_runner, plus runner on 1st moves to 2nd and runner on 2nd to 3rd
-    elif force_still_on = 3: make runner{current_runner} = 1, then increment current_runner, plus 1st > 2nd, 2nd > 3rd, 3rd > home (reset to zero), increment runs
-    
-    
-    '''    
+    if force_still_on == 2 or force_still_on == 3:
+        update_runners(current_game, 1)
+    if force_still_on == 0:
+        update_current_runner_only(current_game)
+    if force_still_on == 1:
+        update_runners_first_current(current_game)  
     
     try:
         db.session.commit()
@@ -337,6 +328,61 @@ def update_runners(current_game, bases: int):
         update_runner3(current_game, bases)
     if current_idx == 4:
         update_runner4(current_game, bases)
+    
+    update_current_runner(current_game)
+
+    try:
+        db.session.commit()
+        return jsonify(current_game.current_runner)
+    except:
+        return jsonify(False)
+
+# Update endpoint for moving current_runner only to first on a walk
+def update_current_runner_only(current_game):
+    current_idx = int(current_game.current_runner)
+
+    if current_idx == 1:
+        current_game.runner1 = 1
+    if current_idx == 2:
+        current_game.runner2 = 1
+    if current_idx == 3:
+        current_game.runner3 = 1
+    if current_idx == 4:
+        current_game.runner4 = 1
+    
+    update_current_runner(current_game)
+
+    try:
+        db.session.commit()
+        return jsonify(current_game.current_runner)
+    except:
+        return jsonify(False)
+
+# Update endpoint for incrementing current_runner and runner on first ONLY
+# @bp.route('/<int:gid>/runners/<int:bases>', methods=['PATCH', 'PUT'])
+def update_runners_first_current(current_game):
+    if current_game.runner1 == 1:
+        current_game.runner1 = 2
+    
+    if current_game.runner2 == 1:
+        current_game.runner2 = 2
+    
+    if current_game.runner3 == 1:
+        current_game.runner3 = 2
+
+    if current_game.runner4 == 1:
+        current_game.runner4 = 2
+    
+    current_idx = int(current_game.current_runner)
+
+    if current_idx == 1:
+        current_game.runner1 = 1
+    if current_idx == 2:
+        current_game.runner2 = 1
+    if current_idx == 3:
+        current_game.runner3 = 1
+    if current_idx == 4:
+        current_game.runner4 = 1
     
     update_current_runner(current_game)
 
