@@ -108,28 +108,35 @@ def update_walk(current_game):
     
     # This WALK situation needs to be fixed for runners on 2nd, 2nd/3rd, or 3rd (current_runner goes to 1st only)
     '''
-    runner1 = (get int from db)
-    runner2 = (get int from db)
-    runner3 = (get int from db)
-    runner4 = (get int from db)
+    runner1 = current_game.runner1
+    runner2 = current_game.runner2
+    runner3 = current_game.runner3
+    runner4 = current_game.runner4
     runner_list = []
-    runner_list[0] = runner1 OR runner_list.append(runner1)...
-    runner_list[1] = runner2
-    runner_list[2] = runner3
-    runner_list[3] = runner4
-    current_runner = (get int from db)
+    runner_list.append(runner1)
+    runner_list.append(runner2)
+    runner_list.append(runner3)
+    runner_list.append(runner4)
+    current_runner = current_game.current_runner
     
     force_still_on = 0
 
-    then loop through runners to see if there's a runner on first;
-    if yes: force_still_on = 1
-        loop through runners to see if there's a runner on second;
-        if yes: force_still_on = 2
-            loop through runners to see if there's a runner on third;
-            if yes: force_still_on = 3, then break
+    then loop through runners to see if there's a runner on first, second, third, etc...
+
+    for r in runner_list:
+        if r == 1: 
+            force_still_on = 1
+            for r in runner_list:
+                if r == 2:
+                force_still_on = 2
+                for r in runner_list:
+                    if r == 3:
+                    force_still_on = 3
+                    break
+                else: break
             else: break
-        else: break
     else: break
+
 
     to find current runner between 4 runners: loop through and look for first that == 0! (that's the one!
     once you have it, manipulate it from there, so do this last after the below logic)
