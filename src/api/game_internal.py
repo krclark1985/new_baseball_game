@@ -113,7 +113,7 @@ def update_walk(current_game):
     runner3 = (get int from db)
     runner4 = (get int from db)
     runner_list = []
-    runner_list[0] = runner1
+    runner_list[0] = runner1 OR runner_list.append(runner1)...
     runner_list[1] = runner2
     runner_list[2] = runner3
     runner_list[3] = runner4

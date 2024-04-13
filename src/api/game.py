@@ -12,12 +12,7 @@ bp = Blueprint('game', __name__, url_prefix='/game')
 @bp.route('', methods=['POST'])
 def create_game():
     req = request.json
-    g = Game(
-        team1_name = req["team1_name"],
-        team1_id = req["team1_id"],
-        team2_name = req["team2_name"],
-        team2_id = req["team2_id"],
-    )
+    g = Game()
     db.session.add(g) # prepare CREATE statement
     db.session.commit() # execute CREATE statement
     return str(g.id)

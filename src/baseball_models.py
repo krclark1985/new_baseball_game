@@ -83,14 +83,14 @@ class Game(db.Model):
     current_runner = db.Column(db.Integer, nullable=False, default=1)
     hit_outcome = db.Column(db.String(50), unique=False, nullable=True)
 
-    def __init__(self, team1_name, team1_id, team2_name, team2_id):
-        self.team1_name = team1_name
-        self.team1_id = team1_id
+    def __init__(self):
+        # self.team1_name = team1_name
+        # self.team1_id = team1_id
         # self.team1_lineup = team1_lineup
         # self.team1_batter = team1_batter
         # self.team1_runs = team1_runs
-        self.team2_name = team2_name
-        self.team2_id = team2_id
+        # self.team2_name = team2_name
+        # self.team2_id = team2_id
         # self.team2_lineup = team2_lineup
         # self.team2_batter = team2_batter
         # self.team2_runs = team2_runs
