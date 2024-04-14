@@ -94,7 +94,8 @@ class Lineup(db.Model):
     away_lineup = db.Column(JSONType)
     home_lineup = db.Column(JSONType)
 
-    def __init__(self, away_lineup, home_lineup):
+    def __init__(self, id, away_lineup, home_lineup):
+        self.id = id
         self.away_lineup = away_lineup
         self.home_lineup = home_lineup
     
