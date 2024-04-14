@@ -17,6 +17,14 @@ def create_game():
     db.session.commit() # execute CREATE statement
     return str(g.id)
 
+@bp.route('', methods=['GET']) # decorator takes path and list of HTTP verbs
+def game_index():
+    games = Game.query.all() # ORM performs SELECT query
+    result = []
+    for g in games:
+        result.append(g.serialize()) # build list of Players as dictionaries
+    return jsonify(result) # return JSON response
+
 
 @bp.route('/<int:gid>/teams_info', methods=['GET']) # decorator takes path and list of HTTP verbs
 def show_team_info(gid: int):

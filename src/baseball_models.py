@@ -87,6 +87,13 @@ class Game(db.Model):
             
         def __str__(self):
             return f"<gid={self.id}>"
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'team1_name': self.team1_name,
+            'team2_name': self.team2_name
+        }
 
 class Lineup(db.Model):
     __tablename__ = 'lineups'
