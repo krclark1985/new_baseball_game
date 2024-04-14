@@ -24,11 +24,8 @@ def show(game_id: int):
 # Create endpoint for creating new JSON lineups for both teams in lineup table
 @bp.route('<int:game_id>', methods=['POST'])
 def create(game_id: int):
-    print('this should print')
-
     req = request.json
 
-    print(req)
     # construct new lineups
     lineups = Lineup(
         away_lineup = req['away'],
@@ -38,38 +35,4 @@ def create(game_id: int):
     db.session.add(lineups) # prepare CREATE statement
     db.session.commit() # execute CREATE statement
     return jsonify(lineups.serialize())
-
-'''
-# Delete endpoint for deleting player from team 1 lineup table
-@bp.route('/<int:id>', methods=['DELETE'])
-def delete(id: int):
-    p = Team1Lineup.query.get_or_404(id, "Player not found")
-    try:
-        db.session.delete(p) # prepare DELETE statement
-        db.session.commit() # execute DELETE statement
-        return jsonify(True)
-    except:
-        # something went wrong :(
-        return jsonify(False)
-
-# Update endpoint for editing info for specific player
-@bp.route('/<int:id>', methods=['PATCH', 'PUT'])
-def update(id: int):
-    p = Team1Lineup.query.get_or_404(id, 'Player not found')
-    if 'name' in request.json:
-        return abort(400)
-    if 'primary_position' in request.json:
-        p.primary_position = request.json['primary_position']
-    if 'average' in request.json:
-        p.average = request.json['average']
-    if 'rbi' in request.json:
-        p.rbi = request.json['rbi']
-    if 'homers' in request.json:
-        p.homers = request.json['homers']
-    try:
-        db.session.commit()
-        return jsonify(p.serialize())
-    except:
-        return jsonify(False)
-'''
 

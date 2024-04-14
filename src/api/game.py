@@ -18,7 +18,6 @@ def create_game():
     return str(g.id)
 
 
-# Read endpoint for team1_name
 @bp.route('/<int:gid>/teams_info', methods=['GET']) # decorator takes path and list of HTTP verbs
 def show_team_info(gid: int):
     g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
@@ -100,6 +99,21 @@ def show_team2_id(gid: int):
 def update_team2_id(gid: int):
     g = Game.query.get_or_404(gid, "Game not found")
     g.team2_id = request.json["team2_id"]
+    
+    try:
+        db.session.commit()
+        return jsonify(g.serialize())
+    except:
+        return jsonify(False)
+    
+# Update endpoint for editing game team info
+@bp.route('/<int:gid>/team_info', methods=['PATCH', 'PUT'])
+def update_game_info(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    g.team1_id = request.json["team1_id"]
+    g.team1_name = request.json["team1_name"]
+    g.team2_id = request.json["team2_id"]
+    g.team2_name = request.json["team2_name"]
     
     try:
         db.session.commit()
