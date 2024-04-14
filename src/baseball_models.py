@@ -90,7 +90,7 @@ class Game(db.Model):
 
 class Lineup(db.Model):
     __tablename__ = 'lineups'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     away_lineup = db.Column(JSONType)
     home_lineup = db.Column(JSONType)
 
