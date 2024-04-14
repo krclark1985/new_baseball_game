@@ -28,7 +28,7 @@ def create(game_id: int):
 
     # construct new lineups
     lineups = Lineup(
-        id = game_id,
+        game_id = game_id,
         away_lineup = req['away'],
         home_lineup = req['home']
     )
