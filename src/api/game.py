@@ -8,6 +8,32 @@ from ..baseball_models import Game, Lineup, db
 
 bp = Blueprint('game', __name__, url_prefix='/game')
 
+# Update endpoint for editing game team info
+@bp.route('/<int:gid>/team_info', methods=['PATCH', 'PUT'])
+def update_game_info(gid: int):
+    db.session.query(Game).filter(Game.id == gid).update({
+        'team1_name': request.json['team1_name'], 
+        'team1_id': request.json['team1_id'], 
+        'team2_name': request.json['team2_name'], 
+        'team2_id': request.json['team2_id'], 
+    })
+    
+    try:
+        db.session.commit()
+        return jsonify(True)
+    except:
+        return jsonify(False)
+    
+@bp.route('/<int:gid>/teams_info', methods=['GET']) # decorator takes path and list of HTTP verbs
+def show_team_info(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
+    return jsonify(
+        team1_name = g.team1_name,
+        team1_id = g.team1_id,
+        team2_name = g.team2_name,
+        team2_id = g.team2_id
+    )
+
 # Create endpoint for creating new game (id = 1)
 # Need to fix this so it returns the db row id rather than hardcoding a 1
 @bp.route('/create', methods=['POST'])
@@ -22,19 +48,8 @@ def game_index():
     games = Game.query.all() # ORM performs SELECT query
     result = []
     for g in games:
-        result.append(g.serialize()) # build list of Players as dictionaries
+        result.append(g.serialize()) 
     return jsonify(result) # return JSON response
-
-
-@bp.route('/<int:gid>/teams_info', methods=['GET']) # decorator takes path and list of HTTP verbs
-def show_team_info(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
-    return jsonify(
-        team1_name = g.team1_name,
-        team1_id = g.team1_id,
-        team2_name = g.team2_name,
-        team2_id = g.team2_id
-    )
 
 # Read endpoint for team1_name
 @bp.route('/<int:gid>/team1_name', methods=['GET']) # decorator takes path and list of HTTP verbs
@@ -114,20 +129,6 @@ def update_team2_id(gid: int):
     except:
         return jsonify(False)
     
-# Update endpoint for editing game team info
-@bp.route('/<int:gid>/team_info', methods=['PATCH', 'PUT'])
-def update_game_info(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found")
-    g.team1_id = request.json["team1_id"]
-    g.team1_name = request.json["team1_name"]
-    g.team2_id = request.json["team2_id"]
-    g.team2_name = request.json["team2_name"]
-    
-    try:
-        db.session.commit()
-        return jsonify(g.serialize())
-    except:
-        return jsonify(False)
 
 # Read endpoint for team1_runs
 @bp.route('/<int:gid>/team1_runs', methods=['GET'])

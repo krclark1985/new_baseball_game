@@ -61,12 +61,12 @@ class Player(db.Model):
 class Game(db.Model):
     __tablename__ = 'game'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    team1_name = db.Column(db.String(50), unique=True, nullable=True)
-    team1_id = db.Column(db.Integer, unique=True, nullable=True)
+    team1_name = db.Column(db.String(50), unique=False, nullable=True)
+    team1_id = db.Column(db.Integer, unique=False, nullable=True)
     team1_batter = db.Column(db.Integer, nullable=False, default=1)
     team1_runs = db.Column(db.Integer, nullable=False, default=0)
-    team2_name = db.Column(db.String(50), unique=True, nullable=True)
-    team2_id = db.Column(db.Integer, unique=True, nullable=True)
+    team2_name = db.Column(db.String(50), unique=False, nullable=True)
+    team2_id = db.Column(db.Integer, unique=False, nullable=True)
     team2_batter = db.Column(db.Integer, nullable=False, default=1)
     team2_runs = db.Column(db.Integer, nullable=False, default=0)
     batting = db.Column(db.Integer, nullable=True)
