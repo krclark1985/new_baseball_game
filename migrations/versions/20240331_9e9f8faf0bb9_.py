@@ -43,10 +43,10 @@ def upgrade():
     sa.Column('current_runner', sa.Integer(), nullable=False),
     sa.Column('hit_outcome', sa.String(length=50), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('team1_id'),
-    sa.UniqueConstraint('team1_name'),
-    sa.UniqueConstraint('team2_id'),
-    sa.UniqueConstraint('team2_name')
+    # sa.UniqueConstraint('team1_id'),
+    # sa.UniqueConstraint('team1_name'),
+    # sa.UniqueConstraint('team2_id'),
+    # sa.UniqueConstraint('team2_name')
     )
     op.create_table('lineups',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),

@@ -54,10 +54,10 @@ def upgrade():
     sa.Column('runner4', sa.Integer(), nullable=False),
     sa.Column('current_runner', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('team1_id'),
-    sa.UniqueConstraint('team1_name'),
-    sa.UniqueConstraint('team2_id'),
-    sa.UniqueConstraint('team2_name')
+    # sa.UniqueConstraint('team1_id'),
+    # sa.UniqueConstraint('team1_name'),
+    # sa.UniqueConstraint('team2_id'),
+    # sa.UniqueConstraint('team2_name')
     )
     # ### end Alembic commands ###
 
