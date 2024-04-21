@@ -84,10 +84,11 @@ def update_team2_batter(current_game):
 # Update endpoint for incrementing number of balls
 # @bp.route('/<int:gid>/balls', methods=['PATCH', 'PUT'])
 def update_balls(current_game):
+    current_game.hit_outcome = "Ball"
     current_game.balls += 1
 
     if current_game.balls == 4:
-        current_game.hit_outcome = "Batter walks."
+        current_game.hit_outcome = "Ball four! Batter walks."
         current_game.balls = 0
         current_game.strikes = 0
         update_walk(current_game)

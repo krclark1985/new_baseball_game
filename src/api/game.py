@@ -331,11 +331,9 @@ def update_pitch(gid: int, player_input: int):
         game_internal.update_hit_func(g)
         outcome_string = g.hit_outcome
     elif pitch_outcome >= 6 and player_input == 1:
-        g.hit_outcome = "Swing and a miss!"
         game_internal.update_swing_miss(g)
         outcome_string = g.hit_outcome
     else:
-        g.hit_outcome = "Ball"
         game_internal.update_balls(g)
         outcome_string = g.hit_outcome
     
