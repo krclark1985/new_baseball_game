@@ -87,6 +87,7 @@ def update_balls(current_game):
     current_game.balls += 1
 
     if current_game.balls == 4:
+        current_game.hit_outcome = "Batter walks."
         current_game.balls = 0
         current_game.strikes = 0
         update_walk(current_game)
@@ -152,6 +153,7 @@ def update_strikes(current_game):
     print(f"!!!!! update_strikes: game={current_game}")
     current_game.strikes += 1
     if current_game.strikes == 3:
+        current_game.hit_outcome = "Strike three! Batter is out."
         current_game.balls = 0
         current_game.strikes = 0
         if current_game.top_of_inning == True:
