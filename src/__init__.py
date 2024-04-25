@@ -14,7 +14,7 @@ def get_env_variable(name):
 
 
 def create_app(test_config=None):
-    env = get_env_variable("DATABASE_URI3")
+    env = get_env_variable("DATABASE_URI_AWS")
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)
     app.config.from_mapping(
