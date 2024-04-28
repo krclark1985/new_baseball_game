@@ -180,15 +180,15 @@ def update_outs(current_game):
             update_inning(current_game)
             update_top_of_inning(current_game)
             update_reset(current_game)
-            current_outcome = current_game.hit_outcome
-            away_team = current_game.team1_name
-            current_game.hit_outcome = f"{current_outcome} End of inning. {away_team} is now batting!"
+            # current_outcome = current_game.hit_outcome
+            # away_team = current_game.team1_name
+            # current_game.hit_outcome = f"{current_outcome} End of inning. {away_team} is now batting!"
         else:
             update_top_of_inning(current_game)
             update_reset(current_game)
-            current_outcome = current_game.hit_outcome
-            home_team = current_game.team2_name
-            current_game.hit_outcome = f"{current_outcome} Three outs. {home_team} is now batting!"
+            # current_outcome = current_game.hit_outcome
+            # home_team = current_game.team2_name
+            # current_game.hit_outcome = f"{current_outcome} Three outs. {home_team} is now batting!"
             # need to update batting team id as well (but need to write that endpoint first!)
     
     try:
