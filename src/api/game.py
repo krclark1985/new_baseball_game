@@ -189,8 +189,7 @@ def update_batting(gid: int):
 def show_top_of_inning(gid: int):
     g = Game.query.get_or_404(gid, "Game not found")
     top_of_inning = g.top_of_inning
-    top_of_inning = str(top_of_inning)
-    return top_of_inning
+    return json.dumps(top_of_inning)
 
 # Read endpoint for team1_batter
 @bp.route('/<int:gid>/team1_batter', methods=['GET']) 
