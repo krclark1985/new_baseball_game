@@ -6,7 +6,6 @@ This is MLB on Flask: a simple yet exciting two-player baseball game that includ
 ## Motivation
 If you're a fan of quick, easy-to-play games or a baseball fan (or both!), MLB on Flask is for you. We've brought America's pastime to your browser, and built it so that anyone can play. You can pick your favorite team, hit as your favorite player, view updated player stats and photos, and hear some of those classic baseball sounds of the game.
 
-(Include this section or no?)
 This game was developed in part to learn three tiered architecture, how to build an efficient REST API, and how to design and effectively integrate PostgreSQL databases. It also became a great opportunity to learn Git and what collaboration looks like between backend and frontend developers.
 
 ## Quick Start
