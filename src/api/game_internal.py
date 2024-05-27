@@ -2,8 +2,7 @@ import random
 from flask import jsonify
 from ..baseball_models import db
 
-# Update endpoint for incrementing team1_runs
-# @bp.route('/<int:gid>/team1_runs', methods=['PATCH', 'PUT'])
+# Function for incrementing team1_runs
 def update_team1_runs(current_game):
     current_game.team1_runs += 1
     current_game.hit_outcome = f"{current_game.hit_outcome}. A run scores!"
@@ -13,8 +12,7 @@ def update_team1_runs(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing team2_runs
-# @bp.route('/<int:gid>/team2_runs', methods=['PATCH', 'PUT'])
+# Function for incrementing team2_runs
 def update_team2_runs(current_game):
     current_game.team2_runs += 1
     if current_game.hit_outcome != "Home run!!!":
@@ -26,12 +24,10 @@ def update_team2_runs(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for editing inning
-# @bp.route('/<int:gid>/inning', methods=['PATCH', 'PUT'])
+# Function for incrementing inning
 def update_inning(current_game):
-    print("!!!UPDATE INNING HIT!!!")
     current_game.inning += 1
-    if current_game.inning > 2: # put back to 9 if test succeeds   
+    if current_game.inning > 9:   
         if current_game.team1_runs > current_game.team2_runs:
             current_game.hit_outcome = f"GAME OVER! {current_game.team1_name} win!"
             # need to send to end of game page here
@@ -45,11 +41,10 @@ def update_inning(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for flipping boolean for top_of_inning
-# @bp.route('/<int:gid>/top_of_inning', methods=['PATCH', 'PUT'])
+# Function for flipping boolean for top_of_inning
 def update_top_of_inning(current_game):
     if current_game.top_of_inning == True:
-        if current_game.inning > 1: # put back to 8 if test succeeds
+        if current_game.inning > 8:
             if current_game.team2_runs > current_game.team1_runs:
                 current_game.hit_outcome = f"GAME OVER! {current_game.team2_name} win!"
                 # need to send to end of game page here
@@ -63,8 +58,7 @@ def update_top_of_inning(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing team1_batter
-#@bp.route('/<gid:int>/team1_batter', methods=['PATCH', 'PUT'])
+# Function for incrementing team1_batter
 def update_team1_batter(current_game):
     if current_game.team1_batter < 9:
         current_game.team1_batter += 1
@@ -77,8 +71,7 @@ def update_team1_batter(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing team2_batter
-# @bp.route('/<int:gid>/team2_batter', methods=['PATCH', 'PUT'])
+# Function for incrementing team2_batter
 def update_team2_batter(current_game):
     if current_game.team2_batter < 9:
         current_game.team2_batter += 1
@@ -91,8 +84,7 @@ def update_team2_batter(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing number of balls
-# @bp.route('/<int:gid>/balls', methods=['PATCH', 'PUT'])
+# Function for incrementing number of balls
 def update_balls(current_game):
     current_game.hit_outcome = "Ball"
     current_game.balls += 1
@@ -113,8 +105,7 @@ def update_balls(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for a walk
-# @bp.route('/<int:gid>/walk', methods=['PATCH', 'PUT'])
+# Function for a walk
 def update_walk(current_game):
 
     runner1 = current_game.runner1
@@ -158,8 +149,7 @@ def update_walk(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing number of strikes
-# @bp.route('/<int:gid>/strikes', methods=['PATCH', 'PUT'])
+# Function for incrementing number of strikes
 def update_strikes(current_game):
     print(f"!!!!! update_strikes: game={current_game}")
     current_game.strikes += 1
@@ -180,19 +170,18 @@ def update_strikes(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing outs
-# @bp.route('/<int:gid>/outs', methods=['PATCH', 'PUT'])
+# Function for incrementing outs
 def update_outs(current_game):
     if current_game.outs < 2:
         current_game.outs += 1
     else:
         if current_game.top_of_inning == False:
-            current_game.hit_outcome = f"End of inning. {current_game.team1_name} now batting!" # need to add hit_outcome to start of string?
+            current_game.hit_outcome = f"End of inning. {current_game.team1_name} now batting!"
             update_inning(current_game)
             update_top_of_inning(current_game)
             update_reset(current_game)
         else:
-            current_game.hit_outcome = f"Three outs. {current_game.team2_name} now batting!" # need to add hit_outcome to start of string?
+            current_game.hit_outcome = f"Three outs. {current_game.team2_name} now batting!"
             update_top_of_inning(current_game)
             update_reset(current_game)
     
@@ -202,8 +191,7 @@ def update_outs(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for resetting values at end of inning (works for either team)
-# @bp.route('/<int:gid>/reset', methods=['PATCH', 'PUT'])
+# Function for resetting values at end of inning (works for either team)
 def update_reset(current_game):
     current_game.balls = 0
     current_game.strikes = 0
@@ -220,8 +208,7 @@ def update_reset(current_game):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing runner1
-# @bp.route('/<int:gid>/runner1/<int:bases>', methods=['PATCH', 'PUT'])
+# Function for incrementing runner1
 def update_runner1(current_game, bases: int):
     current_game.runner1 += bases
 
@@ -239,8 +226,7 @@ def update_runner1(current_game, bases: int):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing runner2
-# @bp.route('/<int:gid>/runner2/<int:bases>', methods=['PATCH', 'PUT'])
+# Function for incrementing runner2
 def update_runner2(current_game, bases: int):
     current_game.runner2 += bases
 
@@ -258,8 +244,7 @@ def update_runner2(current_game, bases: int):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing runner3
-# @bp.route('/<int:gid>/runner3/<int:bases>', methods=['PATCH', 'PUT'])
+# Function for incrementing runner3
 def update_runner3(current_game, bases: int):
     current_game.runner3 += bases
 
@@ -277,8 +262,7 @@ def update_runner3(current_game, bases: int):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing runner4
-# @bp.route('/<int:gid>/runner4/<int:bases>', methods=['PATCH', 'PUT'])
+# Function for incrementing runner4
 def update_runner4(current_game, bases: int):
     current_game.runner4 += bases
 
@@ -296,8 +280,7 @@ def update_runner4(current_game, bases: int):
     except:
         return jsonify(False)
 
-# Update endpoint for incrementing index of current_runner
-# @bp.route('/<int:gid>/current_runner', methods=['PATCH', 'PUT'])
+# Function for incrementing index of current_runner
 def update_current_runner(current_game):
     current_game.current_runner += 1
 
