@@ -29,8 +29,8 @@ def update_team2_runs(current_game):
 def update_inning(current_game):
     print("!!!UPDATE INNING HIT!!!")
     current_game.inning += 1
-    if current_game.inning == 10:    
-        print ("Game Over!")
+    if current_game.inning == 2:    
+        current_game.hit_outcome = "GAME OVER!"
         # Need trigger to end the game somehow
     
     try:
