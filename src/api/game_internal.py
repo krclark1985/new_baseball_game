@@ -6,7 +6,7 @@ from ..baseball_models import db
 # @bp.route('/<int:gid>/team1_runs', methods=['PATCH', 'PUT'])
 def update_team1_runs(current_game):
     current_game.team1_runs += 1
-    
+    current_game.hit_outcome = f"{current_game.hit_outcome}. A run scores!"
     try:
         db.session.commit()
         return jsonify("A run scores!")
@@ -17,6 +17,7 @@ def update_team1_runs(current_game):
 # @bp.route('/<int:gid>/team2_runs', methods=['PATCH', 'PUT'])
 def update_team2_runs(current_game):
     current_game.team2_runs += 1
+    current_game.hit_outcome = f"{current_game.hit_outcome}. A run scores!"
     
     try:
         db.session.commit()
@@ -31,10 +32,10 @@ def update_inning(current_game):
     current_game.inning += 1
     if current_game.inning > 2: # put back to 9 if test succeeds   
         if current_game.team1_runs > current_game.team2_runs:
-            current_game.hit_outcome = f"GAME OVER!{current_game.team1_name} win!"
+            current_game.hit_outcome = f"GAME OVER! {current_game.team1_name} win!"
             # need to send to end of game page here
         if current_game.team2_runs > current_game.team1_runs:
-            current_game.hit_outcome = f"GAME OVER!{current_game.team2_name} win!"
+            current_game.hit_outcome = f"GAME OVER! {current_game.team2_name} win!"
             # need to send to end of game page here
     
     try:
@@ -49,7 +50,7 @@ def update_top_of_inning(current_game):
     if current_game.top_of_inning == True:
         if current_game.inning > 1: # put back to 8 if test succeeds
             if current_game.team2_runs > current_game.team1_runs:
-                current_game.hit_outcome = f"GAME OVER!{current_game.team2_name} win!"
+                current_game.hit_outcome = f"GAME OVER! {current_game.team2_name} win!"
                 # need to send to end of game page here
         current_game.top_of_inning = False
     else:
@@ -193,10 +194,6 @@ def update_outs(current_game):
             current_game.hit_outcome = f"Three outs. {current_game.team2_name} now batting!" # need to add hit_outcome to start of string?
             update_top_of_inning(current_game)
             update_reset(current_game)
-            # current_outcome = current_game.hit_outcome
-            # home_team = current_game.team2_name
-            # current_game.hit_outcome = f"{current_outcome} Three outs. {home_team} is now batting!"
-            # need to update batting team id as well (but need to write that endpoint first!)
     
     try:
         db.session.commit()
