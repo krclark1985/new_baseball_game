@@ -5,7 +5,9 @@ from ..baseball_models import db
 # Function for incrementing team1_runs
 def update_team1_runs(current_game):
     current_game.team1_runs += 1
-    current_game.hit_outcome = f"{current_game.hit_outcome}. A run scores!"
+    if current_game.hit_outcome != "Home run!!!":
+        current_game.hit_outcome = f"{current_game.hit_outcome}. A run scores!"
+    
     try:
         db.session.commit()
         return jsonify("A run scores!")
@@ -30,9 +32,11 @@ def update_inning(current_game):
     if current_game.inning > 9:   
         if current_game.team1_runs > current_game.team2_runs:
             current_game.hit_outcome = f"GAME OVER! {current_game.team1_name} win!"
+            current_game.active = False
             # need to send to end of game page here
         if current_game.team2_runs > current_game.team1_runs:
             current_game.hit_outcome = f"GAME OVER! {current_game.team2_name} win!"
+            current_game.active = False
             # need to send to end of game page here
     
     try:
@@ -47,6 +51,7 @@ def update_top_of_inning(current_game):
         if current_game.inning > 8:
             if current_game.team2_runs > current_game.team1_runs:
                 current_game.hit_outcome = f"GAME OVER! {current_game.team2_name} win!"
+                current_game.active = False
                 # need to send to end of game page here
         current_game.top_of_inning = False
     else:

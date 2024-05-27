@@ -82,6 +82,7 @@ class Game(db.Model):
     runner4 = db.Column(db.Integer, nullable=False, default=0)
     current_runner = db.Column(db.Integer, nullable=False, default=1)
     hit_outcome = db.Column(db.String(50), unique=False, nullable=True)
+    active = db.Column(db.Boolean, nullable=False, default=True)
 
     def __init__(self):
             
