@@ -29,5 +29,6 @@ def post_team_info(mlb_teams):
     while i < len(mlb_teams):
         team_json = json.dumps(mlb_teams[i])
         print(team_json)
-        requests.post('http://localhost:5000/teams', json=team_json)
+        # requests.post('http://localhost:5000/teams', json=team_json)
+        requests.post("https://mlbonflask.com/teams", json=team_json)
         i += 1

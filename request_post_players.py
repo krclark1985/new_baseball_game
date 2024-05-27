@@ -69,7 +69,8 @@ def post_player_stats(team_mlb_id, team_id):
     while i < len(team_player_dicts):
         player_json = json.dumps(team_player_dicts[i])
         print(player_json)
-        requests.post('http://localhost:5000/players', json=player_json)
+        # requests.post('http://localhost:5000/players', json=player_json)
+        requests.post("https://mlbonflask.com/players", json=player_json)
         i += 1
 
     return
@@ -79,7 +80,8 @@ def just_post_players(team_player_dicts):
     while i < len(team_player_dicts):
         player_json = json.dumps(team_player_dicts[i])
         print(player_json)
-        requests.post('http://localhost:5000/players', json=player_json)
+        # requests.post('http://localhost:5000/players', json=player_json)
+        requests.post("https://mlbonflask.com/players", json=player_json)
         i += 1
 
 
