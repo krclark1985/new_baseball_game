@@ -17,7 +17,8 @@ def update_team1_runs(current_game):
 # @bp.route('/<int:gid>/team2_runs', methods=['PATCH', 'PUT'])
 def update_team2_runs(current_game):
     current_game.team2_runs += 1
-    current_game.hit_outcome = f"{current_game.hit_outcome}. A run scores!"
+    if current_game.hit_outcome != "Home run!!!":
+        current_game.hit_outcome = f"{current_game.hit_outcome}. A run scores!"
     
     try:
         db.session.commit()
