@@ -29,9 +29,13 @@ def update_team2_runs(current_game):
 def update_inning(current_game):
     print("!!!UPDATE INNING HIT!!!")
     current_game.inning += 1
-    if current_game.inning == 2:    
-        current_game.hit_outcome = "GAME OVER!"
-        # Need trigger to end the game somehow
+    if current_game.inning > 2: # put back to 9 if test succeeds   
+        if current_game.team1_runs > current_game.team2_runs:
+            current_game.hit_outcome = f"GAME OVER!{current_game.team1_name} win!"
+            # need to send to end of game page here
+        if current_game.team2_runs > current_game.team1_runs:
+            current_game.hit_outcome = f"GAME OVER!{current_game.team2_name} win!"
+            # need to send to end of game page here
     
     try:
         db.session.commit()
@@ -43,6 +47,10 @@ def update_inning(current_game):
 # @bp.route('/<int:gid>/top_of_inning', methods=['PATCH', 'PUT'])
 def update_top_of_inning(current_game):
     if current_game.top_of_inning == True:
+        if current_game.inning > 1: # put back to 8 if test succeeds
+            if current_game.team2_runs > current_game.team1_runs:
+                current_game.hit_outcome = f"GAME OVER!{current_game.team2_name} win!"
+                # need to send to end of game page here
         current_game.top_of_inning = False
     else:
         current_game.top_of_inning = True
@@ -180,12 +188,11 @@ def update_outs(current_game):
             update_inning(current_game)
             update_top_of_inning(current_game)
             update_reset(current_game)
-            # current_outcome = current_game.hit_outcome
-            # away_team = current_game.team1_name
-            # current_game.hit_outcome = f"{current_outcome} End of inning. {away_team} is now batting!"
+            current_game.hit_outcome = f"End of inning. {current_game.team1_name} is now batting!" # need to add hit_outcome to start of string?
         else:
             update_top_of_inning(current_game)
             update_reset(current_game)
+            current_game.hit_outcome = f"End of inning. {current_game.team2_name} is now batting!" # need to add hit_outcome to start of string?
             # current_outcome = current_game.hit_outcome
             # home_team = current_game.team2_name
             # current_game.hit_outcome = f"{current_outcome} Three outs. {home_team} is now batting!"
