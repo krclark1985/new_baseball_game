@@ -185,14 +185,14 @@ def update_outs(current_game):
         current_game.outs += 1
     else:
         if current_game.top_of_inning == False:
+            current_game.hit_outcome = f"End of inning. {current_game.team1_name} now batting!" # need to add hit_outcome to start of string?
             update_inning(current_game)
             update_top_of_inning(current_game)
             update_reset(current_game)
-            current_game.hit_outcome = f"End of inning. {current_game.team1_name} is now batting!" # need to add hit_outcome to start of string?
         else:
+            current_game.hit_outcome = f"Three outs. {current_game.team2_name} now batting!" # need to add hit_outcome to start of string?
             update_top_of_inning(current_game)
             update_reset(current_game)
-            current_game.hit_outcome = f"End of inning. {current_game.team2_name} is now batting!" # need to add hit_outcome to start of string?
             # current_outcome = current_game.hit_outcome
             # home_team = current_game.team2_name
             # current_game.hit_outcome = f"{current_outcome} Three outs. {home_team} is now batting!"
