@@ -501,22 +501,25 @@ def update_groundout(current_game):
     current_game.strikes = 0
     current_game.hit_outcome = 'Groundout'
 
-    idx = current_game.current_runner
-    if idx != 1 and current_game.runner1 > 0:
-        update_runner1(current_game, 1)
-    if idx != 2 and current_game.runner2 > 0:
-        update_runner2(current_game, 1)
-    if idx != 3 and current_game.runner3 > 0:
-        update_runner3(current_game, 1)
-    if idx != 4 and current_game.runner4 > 0:
-        update_runner4(current_game, 1)
+    if current_game.outs < 2:
+        idx = current_game.current_runner
+        if idx != 1 and current_game.runner1 > 0:
+            update_runner1(current_game, 1)
+        if idx != 2 and current_game.runner2 > 0:
+            update_runner2(current_game, 1)
+        if idx != 3 and current_game.runner3 > 0:
+            update_runner3(current_game, 1)
+        if idx != 4 and current_game.runner4 > 0:
+            update_runner4(current_game, 1)
     
-    if current_game.top_of_inning == True:
-        update_team1_batter(current_game)
+        if current_game.top_of_inning == True:
+            update_team1_batter(current_game)
+        else:
+            update_team2_batter(current_game)
+    
+        update_outs(current_game)
     else:
-        update_team2_batter(current_game)
-    
-    update_outs(current_game)
+        update_outs(current_game)
 
     try:
         db.session.commit()
