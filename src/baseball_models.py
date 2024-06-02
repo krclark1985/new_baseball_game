@@ -93,7 +93,8 @@ class Game(db.Model):
         return {
             'id': self.id,
             'team1_name': self.team1_name,
-            'team2_name': self.team2_name
+            'team2_name': self.team2_name,
+            'active': self.active,
         }
 
 class Lineup(db.Model):
