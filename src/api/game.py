@@ -34,6 +34,28 @@ def show_team_info(gid: int):
         team2_id = g.team2_id
     )
 
+@bp.route('/<int:gid>/game_outcome', methods=['GET']) # decorator takes path and list of HTTP verbs
+def game_outcome(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
+
+    if g.active: 
+        return False
+
+    if g.team1_runs > g.team2_runs:
+        winner = g.team1_name
+    else:
+        winner = g.team2_name
+
+    return jsonify(
+        team1_name = g.team1_name,
+        team1_id = g.team1_id,
+        team2_name = g.team2_name,
+        team2_id = g.team2_id, 
+        team1_runs = g.team1_runs, 
+        team2_runs = g.team2_runs, 
+        winner = winner
+    )
+
 # Create endpoint for creating new game (id = 1)
 # Need to fix this so it returns the db row id rather than hardcoding a 1
 @bp.route('/create', methods=['POST'])
@@ -349,3 +371,4 @@ def show_hit(gid: int):
     hit_outcome = g.hit_outcome
     hit_outcome = str(hit_outcome)
     return hit_outcome
+
