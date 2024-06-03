@@ -372,3 +372,11 @@ def show_hit(gid: int):
     hit_outcome = str(hit_outcome)
     return hit_outcome
 
+# Read endpoint for active game
+@bp.route('/<int:gid>/is_active', methods=['GET']) 
+def is_active(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    return jsonify(
+        active = g.active
+    )
+
