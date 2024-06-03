@@ -1,0 +1,8 @@
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.cwd": "/Users/kylec/Desktop/baseball_game_api_version/tests",
+}
