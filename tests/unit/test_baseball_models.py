@@ -41,8 +41,10 @@ def test_new_lineup():
     """
     GIVEN a Lineup model
     WHEN a new Lineup is created
-    THEN check that away_lineup and home_lineup fields are defined correctly
+    THEN check that id, away_lineup and home_lineup fields are defined correctly
     """
-    lineup = Lineup(add JSON player dictionaries for home and away here, then test below)
-    assert lineup.away_lineup ==
+    lineup = Lineup(1, 'Fernando Tatis Jr., Luis Arraez', 'Bobby Witt Jr., Salvador Perez')
+    assert lineup.id == 1
+    assert lineup.away_lineup == 'Fernando Tatis Jr., Luis Arraez'
+    assert lineup.home_lineup == 'Bobby Witt Jr., Salvador Perez'
     
