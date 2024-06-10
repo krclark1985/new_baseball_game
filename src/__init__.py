@@ -46,7 +46,5 @@ def create_app(test_config=None):
     application.register_blueprint(teams.bp)
     application.register_blueprint(game.bp)
     application.register_blueprint(lineups.bp)
-    # app.register_blueprint(team1lineup.bp)
-    # app.register_blueprint(team2lineup.bp)
 
     return application

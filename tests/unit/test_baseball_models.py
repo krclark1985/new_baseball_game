@@ -29,13 +29,15 @@ def test_new_game():
     """
     GIVEN a Game model
     WHEN a new Game is created
-    THEN check that nullable team1_name, team1_id, team2_name, and team2_id fields are defined correctly
+    THEN check that team1_name, team1_id, team2_name, team2_id, inning, and active fields are defined correctly
     """
     game = Game()
     assert game.team1_name is None
     assert game.team1_id is None
     assert game.team2_name is None
     assert game.team2_id is None
+    assert game.inning is None
+    assert game.active is None
 
 def test_new_lineup():
     """

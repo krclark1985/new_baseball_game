@@ -1,4 +1,3 @@
-import json
 # headers = {'content-type':'application/javascript'}
 # headers={'content-type':'application/json', 'Accept':'application/json'}
 from flask import Blueprint, jsonify, abort, request

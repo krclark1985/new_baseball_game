@@ -20,9 +20,6 @@ class Team(db.Model):
             'mlb_id': self.mlb_id,
         }
 
-# TODO: Add "mlb_stats_id" column to players table
-# Make foreign key link to mlb_id in teams table rather than id?
-# Also, consider making team_id non-nullable
 class Player(db.Model):
     __tablename__ = 'players'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
