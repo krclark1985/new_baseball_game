@@ -21,7 +21,7 @@ def show(game_id: int):
     return jsonify(lineups.serialize())
 
 # Create endpoint for creating new JSON lineups for both teams in lineup table
-@bp.route('<int:game_id>', methods=['POST'])
+@bp.route('/<int:game_id>', methods=['POST'])
 def create(game_id: int):
     req = request.json
 

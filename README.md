@@ -8,21 +8,33 @@ This is MLB on Flask: a simple yet exciting two-player baseball game that includ
 
 If you're a fan of quick, easy-to-play games or a baseball fan (or both!), MLB on Flask is for you. We've brought America's pastime to your browser, and built it so that anyone can play. You can pick your favorite team, hit as your favorite player, view updated player stats and photos, and more.
 
-This game was developed in part to learn three tiered architecture, how to build an efficient REST API, and how to design and effectively integrate PostgreSQL databases. It also became a great opportunity to learn Git and what collaboration looks like between backend and frontend developers.
+This game was developed in part to learn three tiered architecture, how to build an efficient REST API, and how to design and effectively integrate PostgreSQL databases utilizing ETL. It also became a great opportunity to learn Git and what collaboration looks like between backend and frontend developers.
 
 ## Quick Start
 
-**If the reader is interested enough in the "what" and the "why", now it's time to show them "how"! This section should be the _minimum amount of information_ they need to run your project.**
+To play MLB on Flask, visit the link below!
 
-**This section doesn't talk about how to build the project, how to contribute to it, or explain every individual feature included. This is about _using_ it, and using it quickly. This section should make it super easy to use the game, or at least super easy to see how it would be used.**
+[Start a Game](https://main.d4x1ah5407uqg.amplifyapp.com/)
 
-Put gameplay URL hyperlink here once game is fully deployed to AWS.
+## Usage/ Features
 
-## Usage
+### MLB on Flask offers many features for exciting gameplay.
 
-**Get technical with the description! This is where you want to brag about any advanced features or special things that your app does. Show off all the cool stuff that you built!**
+**REAL TEAMS:** Play with real Major League Baseball teams, real logos, and real team colors.
 
-From the POV of anyone simply playing the game, what are all the cool technical features?
+**REAL PLAYERS:** You hit with real MLB players in this game, complete with up-to-date stats from the current season and player photos. The game displays a player photo and all stats for whichever player is currently batting.
+
+**BUILD YOUR OWN LINEUP:** When you choose a team to play with, you then create your own lineup of actual players from that team.
+
+**OUTCOME OF EACH PITCH IS DISPLAYED:** After each pitch, the game displays the outcome and what occurred, including any runs that scored. The scorebug (see below) is updated accordingly to keep track of the current state of the game.
+
+**TV-STYLE SCOREBUG TO KEEP TRACK OF GAME:** The game always displays a scorebug showing the two teams playing, the score, the inning (including top/bottom), the ball/strike count to the current hitter, whether there are any runners on base, and the number of outs.
+
+**SWING OUTCOMES BASED ON REAL-WORLD STATS:** To play the game, a player has two choices for each pitch -- either swing or take the pitch. Internally, the game is designed to randomize swing outcomes based on the real percentages of actual outcomes from the complete 2023 MLB season. For example, about 19% of batted balls hit by players resulted in singles in 2023, so 19% of batted balls in MLB on Flask result in singles as well. Player choices matter, though! If a player swings at a pitch that is a ball, they will miss; if they swing at a strike, they will make contact and have a good chance of getting a hit. As a player, be strategic with your swing choices!
+
+**HOME RUN CELEBRATION SCREEN:** When a player hits a home run, a special celebration screen is shown, since this is the most exciting batting outcome that happens in a game.
+
+**PAUSE & RETURN TO OLD GAMES:** When a player visits the MLB on Flask home page linked above, they are given the option of starting a new game or continuing an old one that has been saved to be finished at a later time.
 
 ## Contributing
 

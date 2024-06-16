@@ -8,56 +8,8 @@ from ..baseball_models import Game, Lineup, db
 
 bp = Blueprint('game', __name__, url_prefix='/game')
 
-# Update endpoint for editing game team info
-@bp.route('/<int:gid>/team_info', methods=['PATCH', 'PUT'])
-def update_game_info(gid: int):
-    db.session.query(Game).filter(Game.id == gid).update({
-        'team1_name': request.json['team1_name'], 
-        'team1_id': request.json['team1_id'], 
-        'team2_name': request.json['team2_name'], 
-        'team2_id': request.json['team2_id'], 
-    })
-    
-    try:
-        db.session.commit()
-        return jsonify(True)
-    except:
-        return jsonify(False)
-    
-@bp.route('/<int:gid>/teams_info', methods=['GET']) # decorator takes path and list of HTTP verbs
-def show_team_info(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
-    return jsonify(
-        team1_name = g.team1_name,
-        team1_id = g.team1_id,
-        team2_name = g.team2_name,
-        team2_id = g.team2_id
-    )
 
-@bp.route('/<int:gid>/game_outcome', methods=['GET']) # decorator takes path and list of HTTP verbs
-def game_outcome(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
-
-    if g.active: 
-        return False
-
-    if g.team1_runs > g.team2_runs:
-        winner = g.team1_name
-    else:
-        winner = g.team2_name
-
-    return jsonify(
-        team1_name = g.team1_name,
-        team1_id = g.team1_id,
-        team2_name = g.team2_name,
-        team2_id = g.team2_id, 
-        team1_runs = g.team1_runs, 
-        team2_runs = g.team2_runs, 
-        winner = winner
-    )
-
-# Create endpoint for creating new game (id = 1)
-# Need to fix this so it returns the db row id rather than hardcoding a 1
+# Create endpoint for creating new game
 @bp.route('/create', methods=['POST'])
 def create_game():
     g = Game()
@@ -65,18 +17,19 @@ def create_game():
     db.session.commit() # execute CREATE statement
     return str(g.id)
 
-@bp.route('', methods=['GET']) # decorator takes path and list of HTTP verbs
+# Read endpoint for index of all games
+@bp.route('', methods=['GET'])
 def game_index():
-    games = Game.query.all() # ORM performs SELECT query
+    games = Game.query.all()
     result = []
     for g in games:
         result.append(g.serialize()) 
     return jsonify(result) # return JSON response
 
 # Read endpoint for team1_name
-@bp.route('/<int:gid>/team1_name', methods=['GET']) # decorator takes path and list of HTTP verbs
+@bp.route('/<int:gid>/team1_name', methods=['GET'])
 def show_team1_name(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
+    g = Game.query.get_or_404(gid, "Game not found")
     name = g.team1_name
     return name
 
@@ -95,7 +48,7 @@ def update_team1_name(gid: int):
 # Read endpoint for team1_id
 @bp.route('/<int:gid>/team1_id', methods=['GET'])
 def show_team1_id(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
+    g = Game.query.get_or_404(gid, "Game not found")
     team1_id = g.team1_id
     team1_id = str(team1_id)
     return team1_id
@@ -113,9 +66,9 @@ def update_team1_id(gid: int):
         return jsonify(False)
 
 # Read endpoint for team2_name
-@bp.route('/<int:gid>/team2_name', methods=['GET']) # decorator takes path and list of HTTP verbs
+@bp.route('/<int:gid>/team2_name', methods=['GET'])
 def show_team2_name(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
+    g = Game.query.get_or_404(gid, "Game not found")
     name = g.team2_name
     return name
 
@@ -134,7 +87,7 @@ def update_team2_name(gid: int):
 # Read endpoint for team2_id
 @bp.route('/<int:gid>/team2_id', methods=['GET'])
 def show_team2_id(gid: int):
-    g = Game.query.get_or_404(gid, "Game not found") # ORM performs SELECT query
+    g = Game.query.get_or_404(gid, "Game not found")
     team2_id = g.team2_id
     team2_id = str(team2_id)
     return team2_id
@@ -310,34 +263,8 @@ def show_runners(gid: int):
         runner3 = g.runner3, 
         runner4 = g.runner4, 
     )
-
-# # Update endpoint for each pitch
-# @bp.route('/<int:gid>/pitch/<int:player_input>', methods=['PATCH', 'PUT'])
-# def update_pitch(gid: int, player_input: int):
-#     g = Game.query.get_or_404(gid, "Game not found")
-#     pitch_outcome = random.randint(1, 8)
-#     outcome_string = ''
-
-#     if pitch_outcome <= 5 and player_input == 2:
-#         game_internal.update_strikes(g)
-#         outcome_string = "Called strike."
-#     elif pitch_outcome <= 5 and player_input == 1:
-#         game_internal.update_hit_func(g)
-#         outcome_string = g.hit_outcome
-#     elif pitch_outcome >= 6 and player_input == 1:
-#         game_internal.update_swing_miss(g)
-#         outcome_string = "Swing and a miss!"
-#     else:
-#         game_internal.update_balls(g)
-#         outcome_string = "Ball"
     
-#     try:
-#         db.session.commit()
-#         return jsonify(outcome_string)
-#     except:
-#         return jsonify(False)
-    
-# Update endpoint for each pitch COPY WITH GET METHOD
+# Read endpoint for result of pitch given player input (1==swing, 2==take pitch)
 @bp.route('/<int:gid>/pitch/<int:player_input>', methods=['GET'])
 def update_pitch(gid: int, player_input: int):
     g = Game.query.get_or_404(gid, "Game not found")
@@ -380,3 +307,54 @@ def is_active(gid: int):
         active = g.active
     )
 
+# Update endpoint for editing game team info
+@bp.route('/<int:gid>/team_info', methods=['PATCH', 'PUT'])
+def update_game_info(gid: int):
+    db.session.query(Game).filter(Game.id == gid).update({
+        'team1_name': request.json['team1_name'], 
+        'team1_id': request.json['team1_id'], 
+        'team2_name': request.json['team2_name'], 
+        'team2_id': request.json['team2_id'], 
+    })
+    
+    try:
+        db.session.commit()
+        return jsonify(True)
+    except:
+        return jsonify(False)
+
+# Read endpoint for name and id of both teams in a given game   
+@bp.route('/<int:gid>/teams_info', methods=['GET'])
+def show_team_info(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+    return jsonify(
+        team1_name = g.team1_name,
+        team1_id = g.team1_id,
+        team2_name = g.team2_name,
+        team2_id = g.team2_id
+    )
+
+# Read endpoint for game outcome; if game is active, returns False,
+# if game is inactive, returns both team names, team ids, runs scored,
+# and the winner of the game
+@bp.route('/<int:gid>/game_outcome', methods=['GET'])
+def game_outcome(gid: int):
+    g = Game.query.get_or_404(gid, "Game not found")
+
+    if g.active: 
+        return False
+
+    if g.team1_runs > g.team2_runs:
+        winner = g.team1_name
+    else:
+        winner = g.team2_name
+
+    return jsonify(
+        team1_name = g.team1_name,
+        team1_id = g.team1_id,
+        team2_name = g.team2_name,
+        team2_id = g.team2_id, 
+        team1_runs = g.team1_runs, 
+        team2_runs = g.team2_runs, 
+        winner = winner
+    )
