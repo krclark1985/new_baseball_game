@@ -87,7 +87,7 @@ To play MLB on Flask, visit the link below!
 
 #### **GET ALL PLAYERS**
 ##### **Method**: GET
-##### **URL**: /players
+##### **URL**: `/players`
 ##### **Description**: Shows all current MLB players and their updated average, homers, rbi, player_id, mlb_stats_id, name, primary_position, and team_id
 ##### **Response Example (shortened to 3 sample players for brevity)**: 
 `[
@@ -614,7 +614,7 @@ To play MLB on Flask, visit the link below!
 ##### **URL**: `/game/create`
 ##### **Description**: Start a new game and get its game_id
 ##### **Request Example**: `/game/create`
-##### **Response Example**: `15`
+##### **Response Example**: `14`
 
 #### **SWING AT PITCH**
 ##### **Method**: GET
