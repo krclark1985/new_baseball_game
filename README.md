@@ -39,7 +39,7 @@ To play MLB on Flask, visit the link below!
 ## API Documentation
 
 ### **Overview**
-#### This API describes endpoints available to an MLB on Flask frontend client utilizing the game's backend. It specifies backend features of the game which are accessible to clients, including how to create a new game, how to show teams and players, how to create team lineups, and how to play the game by swinging at or taking pitches.
+#### This API describes endpoints available to an MLB on Flask frontend client seeking to utilize the game's backend. It specifies backend features of the game which are accessible to clients, including how to create a new game, how to show teams and players, how to create team lineups, and how to play the game by swinging at or taking pitches.
 
 ### **Base URL**
 #### `https://mlbonflask.com`
